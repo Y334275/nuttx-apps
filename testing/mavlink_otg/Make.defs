@@ -1,0 +1,3 @@
+ifneq ($(CONFIG_TESTING_MAVLINK_OTG),)
+CONFIGURED_APPS += $(APPDIR)/testing/mavlink_otg
+endif

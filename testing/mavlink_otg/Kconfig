@@ -1,0 +1,47 @@
+config TESTING_MAVLINK_OTG
+	bool "Minimal MAVLink CDC ACM OTG test"
+	default n
+	depends on CDCACM
+	depends on BOARDCTL_USBDEVCTRL
+	---help---
+		Minimal MAVLink v2 target for exercising the ESP32-S3 OTG
+		request lifecycle across USB reset.
+
+if TESTING_MAVLINK_OTG
+
+config TESTING_MAVLINK_OTG_PROGNAME
+	string "Program name"
+	default "mavlink_otg"
+
+config TESTING_MAVLINK_OTG_PRIORITY
+	int "Task priority"
+	default 100
+
+config TESTING_MAVLINK_OTG_STACKSIZE
+	int "Task stack size"
+	default 4096
+
+config TESTING_MAVLINK_OTG_DEVPATH
+	string "CDC ACM device path"
+	default "/dev/ttyACM0"
+
+config TESTING_MAVLINK_OTG_NO_USB
+	bool "Skip USB initialization (isolation test)"
+	default n
+
+config TESTING_MAVLINK_OTG_STRESS
+	bool "Continuously stream PARAM_VALUE frames"
+	default n
+	---help---
+		Stress the CDC ACM IN endpoint with a continuous PARAM_VALUE
+		stream.  Intended for USB OTG request-lifecycle testing.
+
+config TESTING_MAVLINK_OTG_REBIND
+	bool "Exercise USB disconnect/connect after startup"
+	default n
+	---help---
+		Force a CDC ACM endpoint disable/configure cycle after startup.
+		This exercises the OTG request lifecycle without a host-side USB
+		reset.
+
+endif
